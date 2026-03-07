@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LaunchPad — Summer Internship Program</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f2eb;
+      --cream: #ede9df;
+      --accent: #ff5c00;
+      --accent2: #ffc940;
+      --mid: #1a1a1a;
+      --gray: #5a5a5a;
+      --light-gray: #c8c4bc;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.4rem;
+      color: var(--white);
+      letter-spacing: -0.03em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--light-gray); text-decoration: none;
+      font-size: 0.9rem; font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--accent); color: #fff;
+      border: none; padding: 0.6rem 1.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; font-weight: 500;
+      cursor: pointer; border-radius: 4px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: #e04e00; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 3rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 40%, rgba(255,92,0,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 70%, rgba(255,201,64,0.07) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 900px; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(255,92,0,0.15); border: 1px solid rgba(255,92,0,0.3);
+      color: var(--accent); padding: 0.35rem 0.9rem;
+      border-radius: 100px; font-size: 0.8rem; font-weight: 500;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-tag::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--accent); border-radius: 50%;
+      animation: pulse 1.5s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 0.95; letter-spacing: -0.04em;
+      color: var(--white);
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    h1 em { font-style: normal; color: var(--accent); }
+    h1 .line2 { color: var(--cream); display: block; }
+    .hero-sub {
+      margin-top: 1.8rem; max-width: 520px;
+      font-size: 1.1rem; color: var(--light-gray); line-height: 1.7;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-actions {
+      margin-top: 2.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      border: none; padding: 0.9rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 500;
+      cursor: pointer; border-radius: 6px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 0 0 0 rgba(255,92,0,0.4);
+    }
+    .btn-primary:hover {
+      background: #e04e00; transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255,92,0,0.35);
+    }
+    .btn-secondary {
+      background: transparent; color: var(--white);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 0.9rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 400;
+      cursor: pointer; border-radius: 6px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.05);
+    }
+    .hero-stats {
+      margin-top: 4rem; display: flex; gap: 3rem; flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+    .stat-item { }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem; font-weight: 800;
+      color: var(--white);
+    }
+    .stat-num span { color: var(--accent); }
+    .stat-label { font-size: 0.85rem; color: var(--gray); margin-top: 0.15rem; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      overflow: hidden; border-top: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,92,0,0.05);
+      padding: 0.9rem 0;
+    }
+    .marquee-track {
+      display: flex; gap: 3rem; white-space: nowrap;
+      animation: marquee 25s linear infinite;
+    }
+    .marquee-track span {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem; font-weight: 600;
+      color: var(--light-gray); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .marquee-track span.dot { color: var(--accent); }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 3rem; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      color: var(--accent); margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.1; color: var(--white);
+    }
+    .section-title em { font-style: normal; color: var(--accent); }
+
+    /* ── HOW IT WORKS ── */
+    .steps { background: var(--mid); }
+    .steps-inner { max-width: 1100px; margin: 0 auto; }
+    .steps-header { margin-bottom: 4rem; }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1px; background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .step-card {
+      background: var(--mid); padding: 2.5rem 2rem;
+      position: relative; overflow: hidden;
+      transition: background 0.3s;
+    }
+    .step-card:hover { background: #222; }
+    .step-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 4rem; font-weight: 800;
+      color: rgba(255,92,0,0.15); line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+    .step-icon {
+      font-size: 2rem; margin-bottom: 1rem;
+    }
+    .step-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--white); margin-bottom: 0.75rem;
+    }
+    .step-desc { font-size: 0.9rem; color: var(--gray); line-height: 1.7; }
+
+    /* ── TRACKS ── */
+    .tracks { background: var(--black); }
+    .tracks-inner { max-width: 1100px; margin: 0 auto; }
+    .tracks-header { margin-bottom: 4rem; }
+    .tracks-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .track-card {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 2rem;
+      position: relative; overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: default;
+    }
+    .track-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--accent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .track-card:hover { border-color: rgba(255,92,0,0.3); transform: translateY(-4px); }
+    .track-card:hover::before { transform: scaleX(1); }
+    .track-icon { font-size: 2.2rem; margin-bottom: 1.2rem; }
+    .track-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--white); margin-bottom: 0.6rem;
+    }
+    .track-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.7; margin-bottom: 1.2rem; }
+    .track-skills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .skill-tag {
+      font-size: 0.72rem; font-weight: 500;
+      background: rgba(255,255,255,0.06);
+      color: var(--light-gray);
+      padding: 0.25rem 0.6rem; border-radius: 100px;
+    }
+
+    /* ── APPLICATION FORM ── */
+    .apply { background: var(--mid); }
+    .apply-inner {
+      max-width: 700px; margin: 0 auto;
+    }
+    .apply-header { margin-bottom: 3rem; text-align: center; }
+    .apply-header .section-label { justify-content: center; display: flex; }
+    .form-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-group.full { grid-column: 1 / -1; }
+    label {
+      font-size: 0.82rem; font-weight: 500;
+      color: var(--light-gray); letter-spacing: 0.02em;
+    }
+    input, select, textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white);
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    input::placeholder, textarea::placeholder { color: var(--gray); }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      background: rgba(255,92,0,0.05);
+    }
+    select option { background: #1a1a1a; }
+    textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      margin-top: 2rem; text-align: center;
+    }
+    .btn-submit {
+      background: var(--accent); color: #fff;
+      border: none; padding: 1rem 3rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      cursor: pointer; border-radius: 6px;
+      letter-spacing: 0.03em;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .btn-submit:hover {
+      background: #e04e00; transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255,92,0,0.4);
+    }
+    .form-note {
+      margin-top: 1rem; font-size: 0.8rem;
+      color: var(--gray); text-align: center;
+    }
+
+    /* ── SUCCESS MESSAGE ── */
+    .success-msg {
+      display: none; text-align: center; padding: 3rem;
+      border: 1px solid rgba(255,92,0,0.3);
+      border-radius: 12px; background: rgba(255,92,0,0.05);
+    }
+    .success-msg.show { display: block; }
+    .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .success-msg h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem; font-weight: 800;
+      color: var(--white); margin-bottom: 0.75rem;
+    }
+    .success-msg p { color: var(--gray); line-height: 1.7; }
+
+    /* ── FAQ ── */
+    .faq { background: var(--black); }
+    .faq-inner { max-width: 700px; margin: 0 auto; }
+    .faq-header { margin-bottom: 3rem; }
+    .faq-item {
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .faq-question {
+      width: 100%; background: none; border: none;
+      color: var(--white); text-align: left;
+      padding: 1.4rem 0;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 500;
+      cursor: pointer; display: flex;
+      justify-content: space-between; align-items: center;
+      gap: 1rem;
+    }
+    .faq-question:hover { color: var(--accent); }
+    .faq-chevron {
+      color: var(--accent); font-size: 1.2rem;
+      transition: transform 0.3s; flex-shrink: 0;
+    }
+    .faq-item.open .faq-chevron { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; }
+    .faq-answer p {
+      font-size: 0.92rem; color: var(--gray);
+      line-height: 1.8; padding-bottom: 1.4rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--mid);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 3rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.2rem;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-copy { font-size: 0.82rem; color: var(--gray); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 0.82rem; color: var(--gray);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Launch<span>Pad</span></div>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#tracks">Tracks</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('apply').scrollIntoView({behavior:'smooth'})">Apply Now</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Summer 2025 Applications Open</div>
+    <h1>
+      Your Career<br>
+      <em>Starts Here.</em>
+      <span class="line2">Not in 4 Years.</span>
+    </h1>
+    <p class="hero-sub">
+      LaunchPad connects ambitious high school students with real internships at tech and finance companies — before college. Gain skills, build your resume, and get a head start.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('apply').scrollIntoView({behavior:'smooth'})">Apply for Summer 2025 →</button>
+      <button class="btn-secondary" onclick="document.getElementById('tracks').scrollIntoView({behavior:'smooth'})">Explore Tracks</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">8<span>wk</span></div>
+        <div class="stat-label">Program Length</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2<span>+</span></div>
+        <div class="stat-label">Industry Tracks</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">Free to Students</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Tech & Software</span><span class="dot">✦</span>
+    <span>Business & Finance</span><span class="dot">✦</span>
+    <span>Real Industry Experience</span><span class="dot">✦</span>
+    <span>Resume Building</span><span class="dot">✦</span>
+    <span>Mentorship</span><span class="dot">✦</span>
+    <span>Networking</span><span class="dot">✦</span>
+    <span>College-Ready Skills</span><span class="dot">✦</span>
+    <span>Summer 2025</span><span class="dot">✦</span>
+    <!-- duplicate for seamless loop -->
+    <span>Tech & Software</span><span class="dot">✦</span>
+    <span>Business & Finance</span><span class="dot">✦</span>
+    <span>Real Industry Experience</span><span class="dot">✦</span>
+    <span>Resume Building</span><span class="dot">✦</span>
+    <span>Mentorship</span><span class="dot">✦</span>
+    <span>Networking</span><span class="dot">✦</span>
+    <span>College-Ready Skills</span><span class="dot">✦</span>
+    <span>Summer 2025</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="steps" id="how-it-works">
+  <div class="steps-inner">
+    <div class="steps-header">
+      <div class="section-label">The Process</div>
+      <h2 class="section-title">How It <em>Works</em></h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon">📋</div>
+        <div class="step-title">Apply Online</div>
+        <div class="step-desc">Fill out a short application telling us about yourself, your interests, and which track excites you most.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon">🎯</div>
+        <div class="step-title">Get Matched</div>
+        <div class="step-desc">We review your application and match you with a company and mentor aligned with your goals and track.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon">🚀</div>
+        <div class="step-title">Start Learning</div>
+        <div class="step-desc">Spend 8 weeks working on real projects, attending workshops, and building skills alongside industry professionals.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-icon">🏆</div>
+        <div class="step-title">Launch Your Future</div>
+        <div class="step-desc">Graduate with a portfolio, a reference letter, and a network that gives you a serious edge in college and beyond.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACKS -->
+<section class="tracks" id="tracks">
+  <div class="tracks-inner">
+    <div class="tracks-header">
+      <div class="section-label">What You'll Learn</div>
+      <h2 class="section-title">Choose Your <em>Track</em></h2>
+    </div>
+    <div class="tracks-grid">
+      <div class="track-card">
+        <div class="track-icon">💻</div>
+        <div class="track-name">Tech & Software</div>
+        <div class="track-desc">Dive into real software development, product thinking, and the tools used at top tech companies.</div>
+        <div class="track-skills">
+          <span class="skill-tag">Python Basics</span>
+          <span class="skill-tag">Web Development</span>
+          <span class="skill-tag">Data & APIs</span>
+          <span class="skill-tag">Product Thinking</span>
+          <span class="skill-tag">Agile / Scrum</span>
+        </div>
+      </div>
+      <div class="track-card">
+        <div class="track-icon">📊</div>
+        <div class="track-name">Business & Finance</div>
+        <div class="track-desc">Learn how companies operate, how money flows, and develop the analytical skills that drive business decisions.</div>
+        <div class="track-skills">
+          <span class="skill-tag">Financial Modeling</span>
+          <span class="skill-tag">Excel & Sheets</span>
+          <span class="skill-tag">Market Research</span>
+          <span class="skill-tag">Presentations</span>
+          <span class="skill-tag">Business Strategy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATION FORM -->
+<section class="apply" id="apply">
+  <div class="apply-inner">
+    <div class="apply-header">
+      <div class="section-label">Applications Open</div>
+      <h2 class="section-title">Apply for <em>Summer 2025</em></h2>
+      <p style="color:var(--gray); margin-top:1rem; font-size:0.95rem; line-height:1.7;">
+        Applications take about 5 minutes. We'll follow up within 5 business days.
+      </p>
+    </div>
+
+    <div id="form-wrap">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="fname">First Name *</label>
+          <input type="text" id="fname" placeholder="Alex" />
+        </div>
+        <div class="form-group">
+          <label for="lname">Last Name *</label>
+          <input type="text" id="lname" placeholder="Johnson" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" placeholder="alex@email.com" />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="(555) 000-0000" />
+        </div>
+        <div class="form-group">
+          <label for="school">High School Name *</label>
+          <input type="text" id="school" placeholder="Lincoln High School" />
+        </div>
+        <div class="form-group">
+          <label for="grade">Current Grade *</label>
+          <select id="grade">
+            <option value="" disabled selected>Select grade</option>
+            <option>9th Grade</option>
+            <option>10th Grade</option>
+            <option>11th Grade</option>
+            <option>12th Grade</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label for="track">Preferred Track *</label>
+          <select id="track">
+            <option value="" disabled selected>Choose a track</option>
+            <option>Tech & Software</option>
+            <option>Business & Finance</option>
+            <option>Not sure yet — help me decide</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label for="why">Why do you want to join LaunchPad? *</label>
+          <textarea id="why" placeholder="Tell us what excites you about this opportunity and what you hope to learn or achieve..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label for="ref">How did you hear about us?</label>
+          <select id="ref">
+            <option value="" disabled selected>Select one</option>
+            <option>My school / teacher</option>
+            <option>Friend or classmate</option>
+            <option>Social media</option>
+            <option>Google search</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-submit">
+        <button class="btn-submit" onclick="submitApp()">Submit My Application →</button>
+        <p class="form-note">Free to apply. No experience required. Open to all high school students.</p>
+      </div>
+    </div>
+
+    <div class="success-msg" id="success">
+      <div class="success-icon">🎉</div>
+      <h3>Application Received!</h3>
+      <p>Thanks for applying to LaunchPad. We'll review your application and get back to you within 5 business days. Keep an eye on your inbox!</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <div class="section-label">Questions</div>
+      <h2 class="section-title">Frequently <em>Asked</em></h2>
+    </div>
+    <div id="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is this program free for students?
+          <span class="faq-chevron">+</span>
+        </button>
+        <div class="faq-answer"><p>Yes, 100% free. LaunchPad is completely free for students. Our mission is to make real industry experience accessible to all high schoolers regardless of background or resources.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Do I need prior experience or skills?
+          <span class="faq-chevron">+</span>
+        </button>
+        <div class="faq-answer"><p>Not at all. We designed LaunchPad specifically for students with no industry experience. Curiosity, commitment, and a willingness to learn are all you need.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          When does the program run and how many hours per week?
+          <span class="faq-chevron">+</span>
+        </button>
+        <div class="faq-answer"><p>The program runs for 8 weeks over the summer. Students typically commit 15–20 hours per week, a mix of remote work, virtual workshops, and check-ins with mentors.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is this in-person or remote?
+          <span class="faq-chevron">+</span>
+        </button>
+        <div class="faq-answer"><p>LaunchPad is fully remote, so students from anywhere in the country can participate. All you need is a computer and an internet connection.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What do I get at the end of the program?
+          <span class="faq-chevron">+</span>
+        </button>
+        <div class="faq-answer"><p>Graduates receive a certificate of completion, a portfolio project they built during the program, a professional reference letter, and access to our alumni network of students and mentors.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Launch<span>Pad</span></div>
+  <p class="footer-copy">© 2025 LaunchPad Internship Program. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="#how-it-works">How It Works</a>
+    <a href="#tracks">Tracks</a>
+    <a href="#apply">Apply</a>
+    <a href="mailto:hello@launchpad.org">Contact</a>
+  </div>
+</footer>
+
+<script>
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  function submitApp() {
+    const required = ['fname','lname','email','school','grade','track','why'];
+    let valid = true;
+    required.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.style.borderColor = '#ff5c00';
+        el.style.background = 'rgba(255,92,0,0.08)';
+        valid = false;
+        setTimeout(() => {
+          el.style.borderColor = '';
+          el.style.background = '';
+        }, 2000);
+      }
+    });
+    if (!valid) return;
+    document.getElementById('form-wrap').style.display = 'none';
+    document.getElementById('success').classList.add('show');
+    document.getElementById('apply').scrollIntoView({behavior:'smooth'});
+  }
+</script>
+</body>
+</html>
