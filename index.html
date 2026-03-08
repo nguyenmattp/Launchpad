@@ -388,7 +388,7 @@
     <div class="hero-tag">Coming Soon — Join the Waitlist</div>
     <h1>Your Career<br>Starts <em>Here.</em><br>Not in 4 Years.</h1>
     <p class="hero-sub">
-      LaunchPad connects ambitious high school students with real internships at tech and finance companies — before college.
+      LaunchPad is an 8-week program that gives high school students hands-on experience with real industry skills and a project to show for it.
     </p>
     <div class="hero-actions">
       <button class="btn-primary" onclick="document.getElementById('apply').scrollIntoView({behavior:'smooth'})">Join the Waitlist →</button>
@@ -400,7 +400,7 @@
         <div class="stat-label">Program Length</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">2<span>+</span></div>
+        <div class="stat-num">3<span>+</span></div>
         <div class="stat-label">Industry Tracks</div>
       </div>
       <div class="stat-item">
@@ -423,26 +423,26 @@
       <div class="step-card">
         <div class="step-num">Step 01</div>
         <div class="step-icon">📋</div>
-        <div class="step-title">Apply Online</div>
-        <div class="step-desc">Fill out a short application telling us about yourself, your interests, and which track excites you most.</div>
+        <div class="step-title">Join the Waitlist</div>
+        <div class="step-desc">Sign up to express your interest and tell us which track excites you most. We'll notify you the moment applications open.</div>
       </div>
       <div class="step-card">
         <div class="step-num">Step 02</div>
         <div class="step-icon">🎯</div>
-        <div class="step-title">Get Matched</div>
-        <div class="step-desc">We review your application and match you with a company and mentor aligned with your goals and track.</div>
+        <div class="step-title">Pick Your Track</div>
+        <div class="step-desc">Choose from Software, Hardware Design, or Business & Finance based on your interests and goals.</div>
       </div>
       <div class="step-card">
         <div class="step-num">Step 03</div>
         <div class="step-icon">🚀</div>
-        <div class="step-title">Start Learning</div>
-        <div class="step-desc">Spend 8 weeks working on real projects, attending workshops, and building skills alongside industry professionals.</div>
+        <div class="step-title">Learn Real Skills</div>
+        <div class="step-desc">Spend 8 weeks working through structured lessons, hands-on challenges, and guided projects built around real industry practices.</div>
       </div>
       <div class="step-card">
         <div class="step-num">Step 04</div>
         <div class="step-icon">🏆</div>
-        <div class="step-title">Launch Your Future</div>
-        <div class="step-desc">Graduate with a portfolio, a reference letter, and a network that gives you a serious edge in college and beyond.</div>
+        <div class="step-title">Ship Your Project</div>
+        <div class="step-desc">Graduate with a completed project, a certificate, and real experience you can put on your resume and college applications.</div>
       </div>
     </div>
   </div>
@@ -507,34 +507,41 @@
     </div>
 
     <div id="form-wrap">
+      <form id="waitlist-form" action="https://formspree.io/f/mjgakoyz" method="POST">
       <div class="form-grid">
         <div class="form-group">
           <label for="fname">First Name *</label>
-          <input type="text" id="fname" placeholder="Alex" />
+          <input type="text" id="fname" name="first_name" placeholder="Alex" />
         </div>
         <div class="form-group">
           <label for="lname">Last Name *</label>
-          <input type="text" id="lname" placeholder="Johnson" />
+          <input type="text" id="lname" name="last_name" placeholder="Johnson" />
         </div>
         <div class="form-group full">
           <label for="email">Email Address *</label>
-          <input type="email" id="email" placeholder="alex@email.com" />
+          <input type="email" id="email" name="email" placeholder="alex@email.com" />
         </div>
         <div class="form-group full">
           <label for="track">Which track interests you most? *</label>
-          <select id="track">
+          <select id="track" name="track" onchange="toggleOther(this)">
             <option value="" disabled selected>Choose a track</option>
             <option>Software</option>
             <option>Hardware Design</option>
             <option>Business & Finance</option>
             <option>Not sure yet</option>
+            <option>Other</option>
           </select>
+        </div>
+        <div class="form-group full" id="other-group" style="display:none;">
+          <label for="other_track">What track would you like to see? *</label>
+          <input type="text" id="other_track" name="other_track" placeholder="e.g. Graphic Design, Biomedical, Architecture..." />
         </div>
       </div>
       <div class="form-submit">
-        <button class="btn-submit" onclick="submitApp()">Notify Me When Applications Open →</button>
+        <button type="submit" class="btn-submit">Notify Me When Applications Open →</button>
         <p class="form-note">No spam. Just one email when applications go live. Free to join.</p>
       </div>
+      </form>
     </div>
 
     <div class="success-msg" id="success">
@@ -558,21 +565,21 @@
           Is this program free for students?
           <span class="faq-chevron">+</span>
         </button>
-        <div class="faq-answer"><p>Yes, 100% free. LaunchPad is completely free for students. Our mission is to make real industry experience accessible to all high schoolers regardless of background or resources.</p></div>
+        <div class="faq-answer"><p>Yes, 100% free. LaunchPad is completely free for students. Our mission is to make real industry skills accessible to all high schoolers regardless of background or resources.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
           Do I need prior experience or skills?
           <span class="faq-chevron">+</span>
         </button>
-        <div class="faq-answer"><p>Not at all. We designed LaunchPad specifically for students with no industry experience. Curiosity, commitment, and a willingness to learn are all you need.</p></div>
+        <div class="faq-answer"><p>Not at all. LaunchPad is designed specifically for students with no industry experience. Curiosity and a willingness to learn are all you need.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
-          When does the program run and how many hours per week?
+          How does the 8-week program work?
           <span class="faq-chevron">+</span>
         </button>
-        <div class="faq-answer"><p>The program runs for 8 weeks over the summer. Students typically commit 15–20 hours per week, a mix of remote work, virtual workshops, and check-ins with mentors.</p></div>
+        <div class="faq-answer"><p>Each week builds on the last — you'll work through structured lessons, complete hands-on challenges, and progressively build toward a final project you can keep and showcase.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
@@ -586,7 +593,7 @@
           What do I get at the end of the program?
           <span class="faq-chevron">+</span>
         </button>
-        <div class="faq-answer"><p>Graduates receive a certificate of completion, a portfolio project, a professional reference letter, and access to our alumni network of students and mentors.</p></div>
+        <div class="faq-answer"><p>You'll graduate with a completed project, a certificate of completion, and real skills and experience you can highlight on your resume and college applications.</p></div>
       </div>
     </div>
   </div>
@@ -612,21 +619,33 @@
     if (!isOpen) item.classList.add('open');
   }
 
-  function submitApp() {
-    const required = ['fname','lname','email','track'];
-    let valid = true;
-    required.forEach(id => {
-      const el = document.getElementById(id);
-      if (!el.value.trim()) {
-        el.style.borderColor = '#1a56db';
-        el.style.boxShadow = '0 0 0 3px rgba(26,86,219,0.15)';
-        valid = false;
-        setTimeout(() => {
-          el.style.borderColor = '';
-          el.style.boxShadow = '';
-        }, 2000);
+  function toggleOther(select) {
+    const otherGroup = document.getElementById('other-group');
+    if (otherGroup) {
+      otherGroup.style.display = select.value === 'Other' ? 'flex' : 'none';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('waitlist-form');
+    if (!form) return;
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = new FormData(form);
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        document.getElementById('form-wrap').style.display = 'none';
+        document.getElementById('success').classList.add('show');
+        document.getElementById('apply').scrollIntoView({behavior:'smooth'});
+      } else {
+        alert('Something went wrong. Please try again.');
       }
     });
-    if (!valid) return;
-    document.getElementById('form-wrap').style.display = 'none';
-    document.get
+  });
+</script>
+</body>
+</html>
